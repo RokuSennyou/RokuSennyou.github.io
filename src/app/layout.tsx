@@ -27,7 +27,21 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <nav className="flex justify-between items-center p-4 bg-gray-800">
+          <a href="/" className="font-bold text-purple-700">Roku's Home</a>
+          <div className="space-x-4">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/blog">Blog</a>
+            <a href="/schedule">Schedule</a>
+          </div>
+        </nav>
+
+        <main>{children}</main>
+
+        <footer className="text-center text-sm text-gray-500 p-4">
+          © 2025 RokuSennyou. All rights reserved.
+        </footer>
       </body>
     </html>
   );
