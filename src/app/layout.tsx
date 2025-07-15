@@ -28,12 +28,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <nav className="flex justify-between items-center p-4 bg-gray-800">
-          <a href="/" className="font-bold text-purple-700">Roku's Home</a>
+          <a href="/" className="font-bold text-white-700">Roku's Home</a>
           <div className="space-x-4">
             <a href="/" className="text-white-800 hover:text-yellow-200">Home</a>
             <a href="/" className="text-white-800 hover:text-yellow-200">About</a>
             <a href="/" className="text-white-800 hover:text-yellow-200">Blog</a>
-            <a href="/" className="text-white-800 hover:text-yellow-200">Schedule</a>
+            <a href="/" className="text-white-800 hover:text-yellow-200">Contact me</a>
           </div>
         </nav>
 
