@@ -31,9 +31,9 @@ export default function RootLayout({
           <a href="/" className="font-bold text-white-700">Roku's Home</a>
           <div className="space-x-4">
             <a href="/" className="text-white-800 hover:text-yellow-200">Home</a>
-            <a href="/" className="text-white-800 hover:text-yellow-200">About</a>
-            <a href="/" className="text-white-800 hover:text-yellow-200">Blog</a>
-            <a href="/" className="text-white-800 hover:text-yellow-200">Contact me</a>
+            <a href="/about" className="text-white-800 hover:text-yellow-200">About</a>
+            <a href="/blog" className="text-white-800 hover:text-yellow-200">Blog</a>
+            <a href="/contact" className="text-white-800 hover:text-yellow-200">Contact me</a>
           </div>
         </nav>
 
