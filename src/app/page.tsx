@@ -20,16 +20,8 @@ export default function Home() {
         />
       </h1>
       <p className="text-lg text-gray-300 mb-8">
-        A passionate developer sharing insights, experiences, and creative projects
+        Hi! My name is Roku, nice to meet you.
       </p>
-      <div className="space-x-4">
-        <button className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700">
-          Explore My Work
-        </button>
-        <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500">
-          Get In Touch
-        </button>
-      </div>
     </div>
   );
 }
