@@ -1,9 +1,11 @@
 "use client";
 import { Typewriter } from "react-simple-typewriter";
+import ShootingStar from "../components/ShootingStar";
 
 export default function Home() {
   return (
     <div className="h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white flex flex-col items-center justify-center text-center px-4">
+      <ShootingStar />
       <h1 className="text-5xl sm:text-6xl font-bold mb-4">
         <Typewriter
           words={["Welcome to my universe"]}
