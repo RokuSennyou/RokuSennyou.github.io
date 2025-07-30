@@ -1,45 +1,66 @@
 "use client";
 import { useEffect, useState } from "react";
 
+type Meteor = {
+  id: number;
+  top: number;
+  left: number;
+  duration: number;
+};
+
 export default function ShootingStar() {
-  const [visible, setVisible] = useState(false);
+  const [meteors, setMeteors] = useState<Meteor[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setVisible(true);
-      setTimeout(() => setVisible(false), 1000);
-    }, 10000);
-
+      setMeteors((prev) => {
+        const count = Math.floor(Math.random() * 2) + 1;
+        const newMeteors: Meteor[] = [];
+        for (let i = 0; i < count; i++) {
+          newMeteors.push({
+            id: Date.now() + i,
+            top: Math.random() * 20,
+            left: Math.random() * 60,
+            duration: 1 + Math.random() * 0.7,
+          });
+        }
+        return [...prev, ...newMeteors].slice(-30);
+      });
+    }, 500);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    visible && (
-      <div className="absolute top-0 left-0 w-screen h-screen pointer-events-none z-0">
-        <div className="shooting-star" />
-        <style jsx>{`
-          .shooting-star {
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 150px;
-            height: 2px;
-            background: linear-gradient(90deg, white, transparent);
-            animation: shoot 1s linear;
-          }
-
-          @keyframes shoot {
-            0% {
-              transform: translate(0, 0) rotate(45deg);
-              opacity: 1;
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      {meteors.map((m) => (
+        <div
+          key={m.id}
+          className="absolute w-[2px] h-20 bg-white opacity-80"
+          style={{
+            top: `${m.top}%`,
+            left: `${m.left}%`,
+            animation: `meteor-move-45deg-${m.id} ${m.duration}s linear forwards`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        ${meteors
+          .map(
+            (m) => `
+            @keyframes meteor-move-45deg-${m.id} {
+              0% {
+                transform: rotate(-45deg) translate(0, 0);
+                opacity: 1;
+              }
+              100% {
+                transform: rotate(-45deg) translate(0, 200px);
+                opacity: 0;
+              }
             }
-            100% {
-              transform: translate(500px, 500px) rotate(45deg);
-              opacity: 0;
-            }
-          }
-        `}</style>
-      </div>
-    )
+          `
+          )
+          .join("\n")}
+      `}</style>
+    </div>
   );
 }
