@@ -19,8 +19,8 @@ export default function ShootingStar() {
         for (let i = 0; i < count; i++) {
           newMeteors.push({
             id: Date.now() + i,
-            top: Math.random() * 20,
-            left: Math.random() * 60,
+            top: Math.random() * 80,
+            left: Math.random() * 80,
             duration: 1 + Math.random() * 0.7,
           });
         }

@@ -16,7 +16,6 @@ export default function BackgroundStars() {
   const [stars, setStars] = useState<Star[]>([]);
 
   useEffect(() => {
-    // 初始化時產生固定數量的星星
     const s: Star[] = [];
     for (let i = 0; i < STAR_COUNT; i++) {
       s.push({
