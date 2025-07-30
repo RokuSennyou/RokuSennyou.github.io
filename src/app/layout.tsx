@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import MouseTrail from "@/components/MouseTrail";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <MouseTrail />
         <nav className="flex justify-between items-center p-4 bg-gray-800">
           <a href="/" className="font-bold text-white-700">Roku's Universe</a>
           <div className="space-x-4">
