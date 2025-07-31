@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MouseTrail from "@/components/MouseTrail";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,18 +30,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <MouseTrail />
-        <nav className="flex justify-between items-center p-4 bg-gray-800">
-          <a href="/" className="font-bold text-white-700">Roku's Universe</a>
-          <div className="space-x-4">
-            <a href="/" className="text-white-800 hover:text-yellow-200">Home</a>
-            <a href="/about" className="text-white-800 hover:text-yellow-200">About</a>
-            <a href="/blog" className="text-white-800 hover:text-yellow-200">Blog</a>
-            <a href="/contact" className="text-white-800 hover:text-yellow-200">Contact me</a>
-          </div>
-        </nav>
-
-        <main>{children}</main>
-
+        <Navbar />
+        <main className="pt-16">{children}</main>
         <footer className="text-center text-sm text-gray-500 p-4">
           © 2025 RokuSennyou. All rights reserved.
         </footer>
