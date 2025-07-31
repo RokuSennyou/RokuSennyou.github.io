@@ -22,30 +22,24 @@ export default function MouseTrail() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [mouse, setMouse] = useState<{ x: number; y: number } | null>(null);
   const particleId = useRef(0);
-  const lastEmit = useRef(0);
 
   useEffect(() => {
     function handleMove(e: MouseEvent) {
       setMouse({ x: e.clientX, y: e.clientY });
-      const now = Date.now();
-      if (now - lastEmit.current > 40) {
-        lastEmit.current = now;
-        const offset = randomAround(e.clientX, e.clientY, 14);
-        setParticles((prev) => [
-          ...prev,
-          {
-            id: particleId.current++,
-            x: offset.x,
-            y: offset.y,
-            size: 1.2 + Math.random() * 0.7,
-            life: 150 + Math.random() * 50,
-          },
-        ]);
-      }
+      const offset = randomAround(e.clientX, e.clientY, 14);
+      setParticles((prev) => [
+        ...prev,
+        {
+          id: particleId.current++,
+          x: offset.x,
+          y: offset.y,
+          size: 1.2 + Math.random() * 0.7,
+          life: 400 + Math.random() * 60,
+        },
+      ]);
     }
     window.addEventListener("mousemove", handleMove);
 
-    // 靜止時持續閃爍
     const staticStarInterval = setInterval(() => {
       if (mouse) {
         const offset = randomAround(mouse.x, mouse.y, 14);
@@ -56,19 +50,19 @@ export default function MouseTrail() {
             x: offset.x,
             y: offset.y,
             size: 1.2 + Math.random() * 0.7,
-            life: 150 + Math.random() * 50,
+            life: 400 + Math.random() * 60,
           },
         ]);
       }
-    }, 180);
+    }, 150);
 
     const decay = setInterval(() => {
       setParticles((prev) =>
         prev
-          .map((p) => ({ ...p, life: p.life - 30 }))
+          .map((p) => ({ ...p, life: p.life - 40 }))
           .filter((p) => p.life > 0)
       );
-    }, 30);
+    }, 40);
 
     return () => {
       window.removeEventListener("mousemove", handleMove);
@@ -89,7 +83,7 @@ export default function MouseTrail() {
             width: p.size,
             height: p.size,
             background: "white",
-            opacity: Math.max(0, p.life / 150),
+            opacity: Math.max(0, p.life / 400),
             borderRadius: "50%",
             boxShadow: `0 0 4px 1.5px #fff, 0 0 8px 0.5px #fff`,
             pointerEvents: "none",
