@@ -22,13 +22,13 @@ export default function Navbar() {
   return (
     <nav
       className={
-        "fixed top-0 left-0 w-full bg-gray-900/90 flex items-center transition-all duration-300 z-40 px-8 " +
+        "fixed top-0 left-0 w-full bg-black-500 flex items-center transition-all duration-300 z-40 px-8 " +
         sizeClass
       }
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href="/" className="font-bold text-yellow-200 tracking-wide mr-auto select-none">
+      <a href="/" className="font-bold text-white-200 tracking-wide mr-auto select-none">
         Roku&apos;s Universe
       </a>
       <div className="flex gap-8 font-medium">
