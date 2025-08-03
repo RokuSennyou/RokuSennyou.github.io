@@ -5,7 +5,8 @@ import BackgroundStars from "../components/BackgroundStars";
 
 export default function Home() {
   return (
-    <div className="h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white flex flex-col items-center justify-center text-center px-4">
+ <div className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+      <div className="cosmic-bg" />
       <BackgroundStars />
       <ShootingStar />
       <h1 className="text-5xl sm:text-6xl font-bold mb-4">

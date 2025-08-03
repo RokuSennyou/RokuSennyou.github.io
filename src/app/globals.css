@@ -27,3 +27,17 @@ body {
   background-repeat: no-repeat;
   min-height: 100vh;
 }
+
+.cosmic-bg {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(105,64,184,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(64,184,210,0.35) 0%, transparent 70%),
+    linear-gradient(120deg, #181e33 0%, #241652 100%);
+}
+
