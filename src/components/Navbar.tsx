@@ -22,17 +22,20 @@ export default function Navbar() {
   return (
     <nav
       className={
-        "fixed top-0 left-0 w-full bg-[rgba(10,10,20,0.85)] flex items-center justify-center transition-all duration-300 z-40 " +
+        "fixed top-0 left-0 w-full bg-gray-900/90 flex items-center transition-all duration-300 z-40 px-8 " +
         sizeClass
       }
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="flex gap-8 font-bold tracking-wide transition-all duration-300">
-        <Link href="/" className="hover:text-sky-300 transition">Home</Link>
-        <Link href="/about" className="hover:text-sky-300 transition">About</Link>
-        <Link href="/blog" className="hover:text-sky-300 transition">Blog</Link>
-        <Link href="/contact" className="hover:text-sky-300 transition">Contact me</Link>
+      <a href="/" className="font-bold text-yellow-200 tracking-wide mr-auto select-none">
+        Roku&apos;s Universe
+      </a>
+      <div className="flex gap-8 font-medium">
+        <Link href="/" className="text-gray-100 hover:text-yellow-200 transition">Home</Link>
+        <Link href="/about" className="text-gray-100 hover:text-yellow-200 transition">About</Link>
+        <Link href="/blog" className="text-gray-100 hover:text-yellow-200 transition">Blog</Link>
+        <Link href="/contact" className="text-gray-100 hover:text-yellow-200 transition">Contact me</Link>
       </div>
     </nav>
   );
