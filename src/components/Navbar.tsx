@@ -32,9 +32,9 @@ export default function Navbar() {
       onMouseLeave={() => setHovered(false)}
     >
     <a href="/" className="font-bold text-white-200 tracking-wide mr-auto select-none">
-      Roku&apos;s Universe
+      🪐 Roku&apos;s Universe
     </a>
-      <ul className="flex space-x-8 items-center text-lg font-medium">
+      <ul className="flex space-x-4 items-center text-lg font-medium">
         <li>
           <a
             href="/"
