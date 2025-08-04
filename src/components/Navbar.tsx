@@ -23,10 +23,7 @@ export default function Navbar() {
 <nav
   className={
     "fixed top-0 left-0 w-full z-40 px-8 flex items-center transition-all duration-300 " +
-    "bg-gradient-to-r from-[#283c5fee] via-[#7f92c9dd] to-[#3d2d53ee] " +
-    "backdrop-blur-xl backdrop-saturate-150 " +
-    "shadow-lg " +
-    "border-b border-white/15 " +
+    "bg-[#181e33cc] backdrop-blur-lg shadow-lg border-b border-white/10 " +
     sizeClass
   }
   onMouseEnter={() => setHovered(true)}
