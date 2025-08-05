@@ -68,22 +68,42 @@ export default function AboutPage() {
             </ul>
           </div>
         </div>
-        {/* 經歷 */}
+        {/* 經歷 Experience */}
         <div className="mb-8">
-        <h3 className="text-lg font-bold mb-2">求學經歷</h3>
-        <ul className="list-disc ml-6 text-gray-300 space-y-1">
-            <li>國立臺灣師範大學 資訊工程學系</li>
-            <li>市立臺中女子高級中等學校</li>
-        </ul>
-      </div>
+          <h2 className="text-xl font-bold mb-4">經歷</h2>
+          
+          {/* 求學經歷 */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2 text-white-300">求學</h3>
+            <ul className="list-disc ml-6 text-gray-300 space-y-1">
+              <li>國立臺灣師範大學 資訊工程學系</li>
+              <li>市立臺中女子高級中等學校</li>
+            </ul>
+          </div>
 
-      <div>
-        <h3 className="text-lg font-bold mb-2">其他經歷</h3>
-        <ul className="list-disc ml-6 text-gray-300 space-y-1">
-            <li>...</li>
-        </ul>
-      </div>
-
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2 text-white-300">活動</h3>
+            <ul className="list-disc ml-6 text-gray-300 space-y-1">
+              <li>2025.07 - 2025.09 高中海狸一日營 助教</li>
+              <li>2024.10 - 2025.01 啟夢教育科系探索營隊 隊輔</li>
+              <li>2024.09 臺師大東亞資工幼家科學三系聯合宿營 總籌</li>
+              <li>2024.09 - 2025.07 2025 臺師大資工營 總籌</li>
+              <li>2024.07 - 2025.06 師大資工40屆系學會 活動股長</li>
+              <li>2024.08 臺師大 117 級伯樂大學堂 輔導員</li>
+              <li>2023.12 - 2024.07 2024 臺師大資工營 活動股股員兼美輔股股員</li>
+              <li>2024.01 臺師大中友會返鄉服務隊 活動組組員</li>
+              <li>2023.08 築夢教育志工團 活動組組員</li>
+            </ul>
+          </div>
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2 text-white-300">競賽與獎項</h3>
+            <ul className="list-disc ml-6 text-gray-300 space-y-1">
+              <li>2025.06 臺師大資料庫理論 最佳創新專題</li>
+              <li>2024.09 臺師大第十二屆程式設計通識課程 專題特優</li>
+              <li>2024.05 師大資工 Game Jam 第一名</li>
+            </ul>
+          </div>
+        </div>
   </div>
   </div>
 </div>
