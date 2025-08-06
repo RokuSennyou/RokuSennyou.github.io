@@ -22,7 +22,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
       <ShootingStar />
 
       {/* 封面 */}
-      <section className="h-screen flex flex-col items-center justify-center relative z-10">
+      <section className="h-screen flex flex-col items-center justify-center relative z-10 w-full">
         <h1 className="text-5xl sm:text-6xl font-bold mb-4">
           <Typewriter
             words={["Welcome to my universe"]}
@@ -38,9 +38,9 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
           Hi! My name is Roku, nice to meet you.
         </p>
         {/* 箭頭 */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white text-3xl opacity-70 select-none">
+        <a href="#posts" className="absolute bottom-20 left-1/2 -translate-x-1/2 animate-bounce text-white text-3xl opacity-70 select-none">
           ↓
-        </div>
+        </a>
       </section>
 
       {/* 文章 */}
