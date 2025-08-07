@@ -10,6 +10,14 @@ type PostMeta = {
   tags?: string[];
 };
 
+export async function generateStaticParams() {
+  const postsDirectory = path.join(process.cwd(), "posts");
+  const filenames = fs.readdirSync(postsDirectory);
+  return filenames.map((name) => ({
+    id: name.replace(/\.md$/, ""),
+  }));
+}
+
 async function getPostData(id: string): Promise<PostMeta & { id: string; contentHtml: string }> {
   const postsDirectory = path.join(process.cwd(), "posts");
   const fullPath = path.join(postsDirectory, `${id}.md`);
@@ -26,8 +34,9 @@ async function getPostData(id: string): Promise<PostMeta & { id: string; content
   };
 }
 
-export default async function PostPage({ params }: { params: { id: string } }) {
-  const postData = await getPostData(params.id);
+export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const postData = await getPostData(id);
 
   return (
     <main className="max-w-2xl mx-auto p-8 text-left">
