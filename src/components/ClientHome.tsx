@@ -44,39 +44,41 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
         </a>
       </section>
 
-      {/* 文章 */}
-      <section id="posts" className="w-full max-w-2xl mx-auto pb-20 pt-20">
-        <h2 className="text-3xl font-bold mb-8 text-center">文章列表</h2>
+      {/* 文章列表 */}
+      <section id="posts" className="w-full px-4 pb-20 pt-20">
         <ul className="space-y-8">
-  {allPostsData.map(({ id, date, title, tags, summary }) => (
-    <li
-      key={id}
-      className="bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg p-8 transition hover:scale-105 hover:shadow-2xl"
-    >
-      <div className="text-sm text-gray-400 mb-2">{date}</div>
-      <a
-        href={`/posts/${id}`}
-        className="block text-2xl sm:text-3xl font-bold text-white hover:underline mb-2 text-left"
-      >
-        {title}
-      </a>
-      {summary && (
-        <p className="text-base text-gray-300 mb-4 text-left">{summary}</p>
-      )}
-      <div className="flex gap-2 flex-wrap text-left">
-        {tags?.map((tag) => (
-          <span
-            key={tag}
-            className="bg-[#373e5b] text-xs text-blue-300 rounded px-2 py-1"
-          >
-            #{tag}
-          </span>
-        ))}
-      </div>
-    </li>
-  ))}
-</ul>
-
+          {allPostsData.map(({ id, date, title, tags, summary }) => (
+            <li
+              key={id}
+              className="w-full max-w-[1000px] mx-auto bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg px-16 py-8 transition hover:scale-105 hover:shadow-2xl"
+              style={{ minHeight: '140px' }}
+            >
+              {/* 日期＋Tag */}
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-base text-gray-400">{date}</span>
+                {tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className="bg-[#373e5b] text-sm text-blue-300 rounded px-3 py-1 ml-1"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+              {/* 標題 */}
+              <a
+                href={`/posts/${id}`}
+                className="block text-2xl font-bold text-white hover:underline mb-2 text-left"
+              >
+                {title}
+              </a>
+              {/* 摘要 */}
+              {summary && (
+                <p className="text-lg text-gray-300 text-left">{summary}</p>
+              )}
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
