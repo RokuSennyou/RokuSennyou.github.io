@@ -8,6 +8,7 @@ interface Post {
   date: string;
   title: string;
   tags?: string[];
+  summary?: string;
 }
 
 interface ClientHomeProps {
@@ -46,35 +47,36 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
       {/* 文章 */}
       <section id="posts" className="w-full max-w-2xl mx-auto pb-20 pt-20">
         <h2 className="text-3xl font-bold mb-8 text-center">文章列表</h2>
-        <ul className="space-y-6">
-          {allPostsData.map(({ id, date, title, tags }) => (
-            <li
-              key={id}
-              className="bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg p-6 transition hover:scale-105 hover:shadow-2xl"
-            >
-              <a
-                href={`/posts/${id}`}
-                className="text-2xl font-bold text-white hover:underline"
-              >
-                {title}
-              </a>
-              <div className="flex items-center justify-between mt-2">
-                <div className="text-xs text-gray-400">{date}</div>
-                <div className="flex gap-2 flex-wrap">
-                  {tags?.map((tag) => (
-                    <span
-                      key={tag}
-                      className="bg-[#373e5b] text-xs text-blue-300 rounded px-2 py-1"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              {/* 摘要 */}
-            </li>
-          ))}
-        </ul>
+        <ul className="space-y-8">
+  {allPostsData.map(({ id, date, title, tags, summary }) => (
+    <li
+      key={id}
+      className="bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg p-8 transition hover:scale-105 hover:shadow-2xl"
+    >
+      <div className="text-sm text-gray-400 mb-2">{date}</div>
+      <a
+        href={`/posts/${id}`}
+        className="block text-2xl sm:text-3xl font-bold text-white hover:underline mb-2 text-left"
+      >
+        {title}
+      </a>
+      {summary && (
+        <p className="text-base text-gray-300 mb-4 text-left">{summary}</p>
+      )}
+      <div className="flex gap-2 flex-wrap text-left">
+        {tags?.map((tag) => (
+          <span
+            key={tag}
+            className="bg-[#373e5b] text-xs text-blue-300 rounded px-2 py-1"
+          >
+            #{tag}
+          </span>
+        ))}
+      </div>
+    </li>
+  ))}
+</ul>
+
       </section>
     </div>
   );
