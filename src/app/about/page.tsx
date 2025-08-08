@@ -33,7 +33,7 @@ export default function AboutPage() {
             <span className="font-bold text-white">Programming</span>
             <ul className="list-disc ml-6 text-gray-300 space-y-1">
               <li>Python</li>
-              <li>C/C++</li>
+              <li>C / C++ / C#</li>
               <li>JavaScript / TypeScript</li>
               <li>HTML / CSS</li>
             </ul>
@@ -65,6 +65,7 @@ export default function AboutPage() {
             <ul className="list-disc ml-6 text-gray-300 space-y-1">
               <li>Git</li>
               <li>Linux</li>
+              <li>Unity</li>
             </ul>
           </div>
         </div>
@@ -99,7 +100,7 @@ export default function AboutPage() {
             <h3 className="text-lg font-semibold mb-2 text-white-300">競賽與獎項</h3>
             <ul className="list-disc ml-6 text-gray-300 space-y-1">
               <li>2025.06 臺師大資料庫理論 最佳創新專題</li>
-              <li>2025.04 臺師大 113 Star 星辰獎</li>
+              <li>2025.04 臺師大 113 學年度 Star 星辰獎</li>
               <li>2024.09 臺師大第十二屆程式設計通識課程 專題特優</li>
               <li>2024.05 師大資工 Game Jam 第一名</li>
               <li>2024.04 臺師大 112 學年度第二學期五育獎 德育獎</li>

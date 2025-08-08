@@ -50,7 +50,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
           {allPostsData.map(({ id, date, title, tags, summary }) => (
             <li
               key={id}
-              className="w-full max-w-[1000px] mx-auto bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg px-16 py-8 transition hover:scale-105 hover:shadow-2xl"
+              className="w-full max-w-[900px] mx-auto bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg px-16 py-8 transition hover:scale-105 hover:shadow-2xl"
               style={{ minHeight: '140px' }}
             >
               {/* 日期＋Tag */}
