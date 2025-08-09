@@ -58,7 +58,7 @@ export default async function PostPage({
       <div className="flex justify-center items-start py-16 min-h-screen">
         <div className="w-full max-w-4xl bg-[#1a1f2e]/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 p-12">
           {/* 標題 */}
-          <h1 className="text-3xl font-bold mb-2">{postData.title}</h1>
+          <h1 className="text-4xl font-bold mb-2">{postData.title}</h1>
           <div className="mb-4 text-gray-400 text-sm">{postData.date}</div>
           {postData.tags?.length ? (
             <div className="mb-6 flex flex-wrap gap-2">
