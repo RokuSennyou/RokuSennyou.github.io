@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks"; 
 
 import BackgroundStars from "@/components/BackgroundStars";
 
@@ -31,6 +32,7 @@ async function getPostData(
   const matterResult = matter(fileContents);
   const processedContent = await remark()
     .use(remarkGfm)   
+    .use(remarkBreaks)
     .use(html)
     .process(matterResult.content);
 
