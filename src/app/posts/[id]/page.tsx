@@ -75,11 +75,25 @@ export default async function PostPage({
 
           {/* 內文 */}
           <article
-            className="prose prose-invert prose-slate max-w-none
-                       prose-headings:scroll-mt-24
-                       prose-a:text-sky-400 prose-a:no-underline hover:prose-a:underline
-                       prose-hr:border-white/10
-                       prose-img:rounded-lg"
+            className="max-w-none text-gray-100 leading-relaxed
+                       [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mb-4 [&_h1]:mt-6
+                       [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mb-3 [&_h2]:mt-5
+                       [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-white [&_h3]:mb-2 [&_h3]:mt-4
+                       [&_h4]:text-base [&_h4]:font-medium [&_h4]:text-white [&_h4]:mb-2 [&_h4]:mt-3
+                       [&_h5]:text-sm [&_h5]:font-medium [&_h5]:text-white [&_h5]:mb-1 [&_h5]:mt-3
+                       [&_h6]:text-sm [&_h6]:font-medium [&_h6]:text-gray-300 [&_h6]:mb-1 [&_h6]:mt-3
+                       [&_p]:mb-4 [&_p]:text-gray-200
+                       [&_strong]:font-bold [&_strong]:text-white
+                       [&_em]:italic [&_em]:text-gray-300
+                       [&_ul]:mb-4 [&_ul]:ml-6 [&_ul]:list-disc
+                       [&_ol]:mb-4 [&_ol]:ml-6 [&_ol]:list-decimal
+                       [&_li]:mb-1 [&_li]:text-gray-200
+                       [&_blockquote]:border-l-4 [&_blockquote]:border-sky-400 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-300 [&_blockquote]:mb-4
+                       [&_code]:bg-gray-800 [&_code]:text-sky-300 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
+                       [&_pre]:bg-gray-900 [&_pre]:text-gray-100 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:mb-4
+                       [&_a]:text-sky-400 [&_a]:no-underline hover:[&_a]:underline hover:[&_a]:text-sky-300
+                       [&_hr]:border-gray-600 [&_hr]:my-6
+                       [&_img]:rounded-lg [&_img]:max-w-full [&_img]:h-auto"
             dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
           />
 
