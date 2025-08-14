@@ -97,8 +97,9 @@ export default async function PostPage({
       <ShootingStar />
       <div className="py-16 px-4">
         <PostAnimationWrapper>
+          {/* 文章 */}
           <div className="w-full max-w-4xl mx-auto bg-[#1a1f2e]/90 rounded-2xl border border-white/10 p-12 shadow-2xl">
-            {/* 標題 */}
+            {/* 標題 / 標籤 / 內文 */}
             <h1 className="text-4xl font-bold mb-2">{postData.title}</h1>
             <div className="mb-4 text-gray-400 text-sm">{postData.date}</div>
             {postData.tags?.length ? (
@@ -114,63 +115,62 @@ export default async function PostPage({
               </div>
             ) : null}
 
-            {/* 內文 */}
             <article
               className="max-w-none text-gray-100 leading-relaxed [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mb-4 [&_h1]:mt-6 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mb-3 [&_h2]:mt-5 [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-white [&_h3]:mb-2 [&_h3]:mt-4 [&_h4]:text-base [&_h4]:font-medium [&_h4]:text-white [&_h4]:mb-2 [&_h4]:mt-3 [&_h5]:text-sm [&_h5]:font-medium [&_h5]:text-white [&_h5]:mb-1 [&_h5]:mt-3 [&_h6]:text-sm [&_h6]:font-medium [&_h6]:text-gray-300 [&_h6]:mb-1 [&_h6]:mt-3 [&_p]:mb-4 [&_p]:text-gray-200 [&_strong]:font-bold [&_strong]:text-white [&_em]:italic [&_em]:text-gray-300 [&_ul]:mb-4 [&_ul]:ml-6 [&_ul]:list-disc [&_ol]:mb-4 [&_ol]:ml-6 [&_ol]:list-decimal [&_li]:mb-1 [&_li]:text-gray-200 [&_blockquote]:border-l-4 [&_blockquote]:border-sky-400 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-300 [&_blockquote]:mb-4 [&_code]:bg-gray-800 [&_code]:text-sky-300 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_pre]:bg-gray-900 [&_pre]:text-gray-100 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:mb-4 [&_a]:text-sky-400 [&_a]:no-underline hover:[&_a]:underline hover:[&_a]:text-sky-300 [&_hr]:border-gray-600 [&_hr]:my-6 [&_img]:rounded-lg [&_img]:max-w-full [&_img]:h-auto"
               dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
             />
+          </div>
+          {/* 前後篇 */}
+          <div className="w-full max-w-4xl mx-auto mt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 前 */}
+              {prevPost ? (
+                <a
+                  href={`/posts/${prevPost.id}`}
+                  className="group flex items-center gap-3 px-6 py-4
+                            bg-[#2a2f3e]/80 hover:bg-[#2a2f3e]
+                            rounded-lg border border-white/10 hover:border-white/20
+                            transition-all duration-300"
+                >
+                  <div className="text-sky-400 group-hover:text-sky-300 transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-medium text-gray-200 group-hover:text-white transition-colors text-sm leading-tight truncate">
+                      {prevPost.title}
+                    </div>
+                  </div>
+                </a>
+              ) : (
+                <div className="hidden sm:block"></div>
+              )}
 
-            {/* 前後文章 */}
-            <div className="mt-12 pt-8">
-              <div className="grid grid-cols-2 gap-4">
-                {/* 前一篇 */}
-                {prevPost ? (
-                  <a
-                    href={`/posts/${prevPost.id}`}
-                    className="group flex items-center gap-3 px-6 py-4 bg-[#2a2f3e]/80 hover:bg-[#2a2f3e] rounded-lg border border-white/10 hover:border-white/20 transition-all duration-300"
-                  >
-                    <div className="text-sky-400 group-hover:text-sky-300 transition-colors">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                      </svg>
+              {/* 後 */}
+              {nextPost ? (
+                <a
+                  href={`/posts/${nextPost.id}`}
+                  className="group flex items-center justify-end gap-3 px-6 py-4
+                            bg-[#2a2f3e]/80 hover:bg-[#2a2f3e]
+                            rounded-lg border border-white/10 hover:border-white/20
+                            transition-all duration-300 text-right"
+                >
+                  <div className="min-w-0">
+                    <div className="font-medium text-gray-200 group-hover:text-white transition-colors text-sm leading-tight truncate">
+                      {nextPost.title}
                     </div>
-                    <div className="min-w-0">
-                      <div className="font-medium text-gray-200 group-hover:text-white transition-colors text-sm leading-tight">
-                        {prevPost.title}
-                      </div>
-                    </div>
-                  </a>
-                ) : (
-                  <div></div>
-                )}
-
-                {/* 後一篇 */}
-                {nextPost ? (
-                  <a
-                    href={`/posts/${nextPost.id}`}
-                    className="group flex items-center gap-3 px-6 py-4 bg-[#2a2f3e]/80 hover:bg-[#2a2f3e] rounded-lg border border-white/10 hover:border-white/20 transition-all duration-300 justify-end text-right"
-                  >
-                    <div className="min-w-0">
-                      <div className="font-medium text-gray-200 group-hover:text-white transition-colors text-sm leading-tight">
-                        {nextPost.title}
-                      </div>
-                    </div>
-                    <div className="text-sky-400 group-hover:text-sky-300 transition-colors">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M9 18l6-6-6-6"/>
-                      </svg>
-                    </div>
-                  </a>
-                ) : (
-                  <div></div>
-                )}
-              </div>
+                  </div>
+                  <div className="text-sky-400 group-hover:text-sky-300 transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </div>
+                </a>
+              ) : (
+                <div className="hidden sm:block"></div>
+              )}
             </div>
-            {/*<div className="mt-8">
-              <a href="/" className="text-sky-400 hover:text-sky-300">
-                ← 回首頁
-              </a>
-            </div>*/}
           </div>
         </PostAnimationWrapper>
       </div>
