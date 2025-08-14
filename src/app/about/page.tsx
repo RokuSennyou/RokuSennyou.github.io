@@ -1,6 +1,7 @@
 "use client";
 import BackgroundStars from "@/components/BackgroundStars";
 import ShootingStar from "@/components/ShootingStar";
+import YoutubeMusic from "@/components/YoutubeMusic";
 import { useEffect, useState } from "react";
 
 export default function AboutPage() {
@@ -129,6 +130,13 @@ export default function AboutPage() {
                 <li>2024.05 師大資工 Game Jam 第一名</li>
                 <li>2024.04 臺師大 112 學年度第二學期五育獎 德育獎</li>
               </ul>
+            </div>
+          </div>
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-4 text-white">最後來偷偷放一下我最喜歡的樂團的 Universe!</h2>
+            <p className="mb-8 text-gray-300">也是這個網站（自認）的主題曲！可以來聽看看🌟🪐🌌 </p>
+            <div className="w-full max-w-2xl mx-auto aspect-video">
+              <YoutubeMusic />
             </div>
           </div>
         </div>
