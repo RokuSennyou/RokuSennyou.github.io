@@ -5,7 +5,7 @@ import { remark } from "remark";
 import html from "remark-html";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks"; 
-
+import ShootingStar from "@/components/ShootingStar";
 import BackgroundStars from "@/components/BackgroundStars";
 import PostAnimationWrapper from "@/components/PostAnimationWrapper";
 
@@ -55,7 +55,8 @@ export default async function PostPage({
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-[#181e33] via-[#232952] to-[#3d1f56] relative overflow-hidden">
       <BackgroundStars/>
-
+      <ShootingStar />
+      
       <div className="py-16 px-4">
         <PostAnimationWrapper>
           <div className="w-full max-w-4xl mx-auto bg-[#1a1f2e]/90 rounded-2xl border border-white/10 p-12 shadow-2xl">
