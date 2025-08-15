@@ -63,7 +63,7 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          <a
+          {/*<a
             href="/blog"
             className={`flex items-center gap-2 rounded-xl transition-all duration-300 ${buttonClass}
               ${pathname.startsWith("/blog")
@@ -71,7 +71,7 @@ export default function Navbar() {
                 : "text-gray-300 hover:text-white hover:bg-white/10"}`}
           >
             <span role="img" aria-label="Blog">🌠</span> Blog
-          </a>
+          </a>*/}
         </li>
       </ul>
     </nav>
