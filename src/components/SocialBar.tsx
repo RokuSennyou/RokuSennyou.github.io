@@ -1,4 +1,5 @@
-import { FaInstagram, FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaLinkedin, FaGithub, FaDiscord } from "react-icons/fa";
+import { FaD } from "react-icons/fa6";
 import { FiMail } from "react-icons/fi";
 
 export default function SocialBar() {
@@ -12,6 +13,9 @@ export default function SocialBar() {
       </a>
       <a href="mailto:rokusenn.liao@gmail.com">
         <FiMail className={iconStyle} />
+      </a>
+      <a href="https://discord.com/users/559677851830321155" target="_blank" rel="noopener noreferrer">
+        <FaDiscord className={iconStyle} />
       </a>
     </div>
   );

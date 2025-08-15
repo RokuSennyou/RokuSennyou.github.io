@@ -2,6 +2,7 @@
 import BackgroundStars from "@/components/BackgroundStars";
 import ShootingStar from "@/components/ShootingStar";
 import YoutubeMusic from "@/components/YoutubeMusic";
+import SocialBar from "@/components/SocialBar";
 import { useEffect, useState } from "react";
 
 export default function AboutPage() {
@@ -131,6 +132,11 @@ export default function AboutPage() {
                 <li>2024.04 臺師大 112 學年度第二學期五育獎 德育獎</li>
               </ul>
             </div>
+          </div>
+          {/* 聯絡 */}
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-4">聯絡我</h2>
+            <SocialBar />
           </div>
           <div className="mb-8">
             <h2 className="text-xl font-bold mb-4 text-white">最後來偷偷放一下我最喜歡的樂團的 Universe!</h2>
