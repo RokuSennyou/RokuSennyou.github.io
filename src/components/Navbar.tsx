@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import SearchPopover from "./SearchPopover";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -62,7 +63,6 @@ export default function Navbar() {
             <span role="img" aria-label="About">🌙</span> About
           </a>
         </li>
-        <li>
           {/*<a
             href="/blog"
             className={`flex items-center gap-2 rounded-xl transition-all duration-300 ${buttonClass}
@@ -72,6 +72,8 @@ export default function Navbar() {
           >
             <span role="img" aria-label="Blog">🌠</span> Blog
           </a>*/}
+        <li>
+          <SearchPopover />
         </li>
       </ul>
     </nav>
