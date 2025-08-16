@@ -28,7 +28,6 @@ export default function SearchPopover() {
 
   const toggle = () => setOpen((v) => !v);
 
-  // 獲取標籤
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const fetchTags = async () => {
@@ -48,7 +47,6 @@ export default function SearchPopover() {
     }
   }, []);
 
-  // 即時搜尋函數
   const performSearch = useCallback(async (query: string) => {
     if (!query || query.trim().length < 2) {
       setSearchResults([]);
@@ -72,24 +70,20 @@ export default function SearchPopover() {
     }
   }, []);
 
-  // 處理輸入變化，加入 debounce
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
     setSelectedIndex(-1);
 
-    // 清除之前的搜尋計時器
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
 
-    // 設定新的搜尋計時器（300ms 後執行）
     searchTimeoutRef.current = setTimeout(() => {
       performSearch(newValue);
     }, 300);
   };
 
-  // 清理計時器
   useEffect(() => {
     return () => {
       if (searchTimeoutRef.current) {
@@ -98,7 +92,6 @@ export default function SearchPopover() {
     };
   }, []);
 
-  // 鍵盤導航
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!searchResults.length) return;
 
@@ -123,7 +116,6 @@ export default function SearchPopover() {
       const id = requestAnimationFrame(() => inputRef.current?.focus());
       return () => cancelAnimationFrame(id);
     } else {
-      // 關閉時清空搜尋結果
       setSearchResults([]);
       setSelectedIndex(-1);
       setValue("");
@@ -168,7 +160,6 @@ export default function SearchPopover() {
     router.push(result.url);
   }
 
-  // 高亮搜尋關鍵字
   const highlightText = (text: string, query: string): React.ReactNode => {
     if (!query || !text) return text;
     
