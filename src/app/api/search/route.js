@@ -1,4 +1,3 @@
-// src/app/api/search/route.js
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -32,19 +31,15 @@ export async function GET(request) {
       try {
         const { data, content } = matter(fileContents);
         
-        // 檢查標題是否符合
         const titleMatch = data.title && data.title.toLowerCase().includes(searchTerm);
         
-        // 檢查內容是否符合
         const contentMatch = content.toLowerCase().includes(searchTerm);
         
-        // 檢查標籤是否符合
         const tagMatch = data.tags && data.tags.some(tag => 
           tag.toLowerCase().includes(searchTerm)
         );
         
         if (titleMatch || contentMatch || tagMatch) {
-          // 提取符合的內容片段
           let snippet = '';
           if (contentMatch) {
             const contentIndex = content.toLowerCase().indexOf(searchTerm);
@@ -55,7 +50,6 @@ export async function GET(request) {
             if (end < content.length) snippet = snippet + '...';
           }
           
-          // 建立文章 slug (從檔名)
           const slug = fileName.replace(/\.mdx?$/, '');
           
           searchResults.push({
@@ -65,7 +59,7 @@ export async function GET(request) {
             snippet: snippet,
             date: data.date,
             tags: data.tags || [],
-            url: `/blog/${slug}`, // 根據你的路由結構調整
+            url: `/posts/${slug}`, 
             matchType: titleMatch ? 'title' : (tagMatch ? 'tag' : 'content')
           });
         }
@@ -74,13 +68,11 @@ export async function GET(request) {
       }
     }
     
-    // 按相關性排序：標題匹配 > 標籤匹配 > 內容匹配
     searchResults.sort((a, b) => {
       const order = { title: 0, tag: 1, content: 2 };
       return order[a.matchType] - order[b.matchType];
     });
     
-    // 限制結果數量
     return NextResponse.json(searchResults.slice(0, 10));
     
   } catch (error) {
