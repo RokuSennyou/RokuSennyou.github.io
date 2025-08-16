@@ -151,8 +151,9 @@ export default function SearchPopover() {
   }
 
   function onTagClick(tag: string) {
-    setOpen(false);
-    router.push(`/search?tag=${encodeURIComponent(tag)}`);
+    setValue(tag);
+    setSelectedIndex(-1);
+    performSearch(tag);
   }
 
   function onResultClick(result: SearchResult) {
@@ -201,7 +202,6 @@ export default function SearchPopover() {
           
           <div className="relative w-full max-w-4xl mx-4 mt-16 animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="bg-[#1a1f2e]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-              {/* 搜尋輸入區域 */}
               <form onSubmit={onSubmit} className="p-8">
                 <div className="flex items-center gap-6 mb-6">
                   <svg viewBox="0 0 24 24" fill="none" className="h-8 w-8 text-white/70 flex-shrink-0">
@@ -237,7 +237,7 @@ export default function SearchPopover() {
                   </button>
                 </div>
 
-                {/* 搜尋結果區域 */}
+                {/* 結果 */}
                 {value.length >= 2 && (
                   <div className="mb-6">
                     {searchResults.length > 0 ? (
@@ -351,6 +351,7 @@ export default function SearchPopover() {
                 </div>
               </form>
 
+              {/* tag */}
               {value.length < 2 && (
                 <>
                   <div className="border-t border-white/10"></div>

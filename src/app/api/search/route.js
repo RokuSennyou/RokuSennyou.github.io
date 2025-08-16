@@ -35,11 +35,14 @@ export async function GET(request) {
         
         const contentMatch = content.toLowerCase().includes(searchTerm);
         
-        const tagMatch = data.tags && data.tags.some(tag => 
+        const tagExactMatch = data.tags && data.tags.some(tag => 
+          tag.toLowerCase() === searchTerm
+        );
+        const tagPartialMatch = data.tags && data.tags.some(tag => 
           tag.toLowerCase().includes(searchTerm)
         );
         
-        if (titleMatch || contentMatch || tagMatch) {
+        if (titleMatch || contentMatch || tagExactMatch || tagPartialMatch) {
           let snippet = '';
           if (contentMatch) {
             const contentIndex = content.toLowerCase().indexOf(searchTerm);
@@ -52,6 +55,11 @@ export async function GET(request) {
           
           const slug = fileName.replace(/\.mdx?$/, '');
           
+          let matchType = 'content';
+          if (titleMatch) matchType = 'title';
+          else if (tagExactMatch) matchType = 'tag-exact';
+          else if (tagPartialMatch) matchType = 'tag';
+          
           searchResults.push({
             id: slug,
             title: data.title || fileName,
@@ -59,8 +67,8 @@ export async function GET(request) {
             snippet: snippet,
             date: data.date,
             tags: data.tags || [],
-            url: `/posts/${slug}`, 
-            matchType: titleMatch ? 'title' : (tagMatch ? 'tag' : 'content')
+            url: `/posts/${slug}`,
+            matchType: matchType
           });
         }
       } catch (error) {
@@ -69,7 +77,7 @@ export async function GET(request) {
     }
     
     searchResults.sort((a, b) => {
-      const order = { title: 0, tag: 1, content: 2 };
+      const order = { title: 0, 'tag-exact': 1, tag: 2, content: 3 };
       return order[a.matchType] - order[b.matchType];
     });
     
