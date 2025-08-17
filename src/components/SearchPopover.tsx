@@ -262,13 +262,13 @@ export default function SearchPopover() {
                   </button>
                 </div>
 
-                {/* 搜尋結果 */}
+                {/* 結果 */}
                 {value.length >= 1 && (
                   <div className={`mb-6 transform transition-all duration-300 ${
                     isClosing ? 'translate-y-4 opacity-0 delay-0' : 'translate-y-0 opacity-100 delay-300'
                   }`}>
                     {searchResults.length > 0 ? (
-                      <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide">
+                      <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide p-2 -m-2">
                         <div className="text-sm text-white/60 mb-3">
                           找到 {searchResults.length} 個結果
                         </div>
