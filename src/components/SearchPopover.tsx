@@ -48,7 +48,7 @@ export default function SearchPopover() {
   }, []);
 
   const performSearch = useCallback(async (query: string) => {
-    if (!query || query.trim().length < 2) {
+    if (!query || query.trim().length < 1) {
       setSearchResults([]);
       return;
     }
@@ -144,10 +144,6 @@ export default function SearchPopover() {
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const q = value.trim();
-    if (!q) return;
-    setOpen(false);
-    router.push(`/search?q=${encodeURIComponent(q)}`);
   }
 
   function onTagClick(tag: string) {
@@ -257,7 +253,7 @@ export default function SearchPopover() {
                 </div>
 
                 {/* 搜尋結果 */}
-                {value.length >= 2 && (
+                {value.length >= 1 && (
                   <div className={`mb-6 transform transition-all duration-400 delay-300 ${
                     open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                   }`}>
@@ -346,7 +342,7 @@ export default function SearchPopover() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-2 rounded bg-white/10 text-sm font-mono">↑↓</span>
-                      <span>選擇</span>
+                      <span>選擇結果</span>
                     </div>
                   </div>
                   
@@ -367,8 +363,8 @@ export default function SearchPopover() {
                 </div>
               </form>
 
-              {/* tag OUO */}
-              {value.length < 2 && (
+              {/* Tag OUO */}
+              {value.length < 1 && (
                 <>
                   <div className="border-t border-white/10"></div>
                   <div className="p-8">
