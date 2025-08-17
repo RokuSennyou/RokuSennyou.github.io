@@ -15,6 +15,7 @@ interface SearchResult {
 }
 
 export default function SearchPopover() {
+  const datasetRef = useRef<SearchResult[] | null>(null);
   const [open, setOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [value, setValue] = useState("");
@@ -38,47 +39,71 @@ export default function SearchPopover() {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const fetchTags = async () => {
-        try {
-          const response = await fetch('/api/tags');
-          if (response.ok) {
-            const tags = await response.json();
-            setAvailableTags(tags);
-          } else {
-            setAvailableTags(['日常']);
-          }
-        } catch (error) {
-          console.error('Failed to fetch tags:', error);
-          setAvailableTags(['日常']);
-        }
-      };
-      fetchTags();
+  const fetchTags = async () => {
+    try {
+      const res = await fetch('/tags.json', { cache: 'force-cache' });
+      if (res.ok) {
+        const tags = await res.json();
+        setAvailableTags(tags);
+      } else {
+        setAvailableTags(['日常']);
+      }
+    } catch (e) {
+      console.error('Failed to fetch /tags.json', e);
+      setAvailableTags(['日常']);
     }
-  }, []);
+  };
+  fetchTags();
+}, []);
 
   const performSearch = useCallback(async (query: string) => {
-    if (!query || query.trim().length < 1) {
-      setSearchResults([]);
-      return;
+  const q = query.trim();
+  if (!q) {
+    setSearchResults([]);
+    return;
+  }
+
+  setIsSearching(true);
+  try {
+    // 第一次才抓靜態資料
+    if (!datasetRef.current) {
+      const res = await fetch('/search.json', { cache: 'force-cache' });
+      if (!res.ok) throw new Error('fetch /search.json failed');
+      datasetRef.current = (await res.json()) as SearchResult[];
     }
 
-    setIsSearching(true);
-    try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-      if (response.ok) {
-        const results = await response.json();
-        setSearchResults(results);
-      } else {
-        setSearchResults([]);
-      }
-    } catch (error) {
-      console.error('Search error:', error);
-      setSearchResults([]);
-    } finally {
-      setIsSearching(false);
+    const all = datasetRef.current || [];
+    const lower = q.toLowerCase();
+
+    // 比對：標題 / 標籤 / 內容，回傳 [score, matchType, item]
+    const scoredTuples: Array<[number, SearchResult['matchType'], SearchResult]> = [];
+
+    for (const item of all) {
+      const inTitle = item.title?.toLowerCase().includes(lower);
+      const inTags = (item.tags || []).some(t => String(t).toLowerCase().includes(lower));
+      const content = (item.summary || item.snippet || '').toLowerCase();
+      const inContent = content.includes(lower);
+
+      if (inTitle) scoredTuples.push([3, 'title', item]);
+      else if (inTags) scoredTuples.push([2, 'tag', item]);
+      else if (inContent) scoredTuples.push([1, 'content', item]);
     }
-  }, []);
+
+    // 依 score 排序、最多取 30 筆，最後再把 matchType 塞回去
+    scoredTuples.sort((a, b) => b[0] - a[0]);
+    const limited = scoredTuples.slice(0, 30).map(([, matchType, item]) => ({
+      ...item,
+      matchType,
+    }));
+
+    setSearchResults(limited);
+  } catch (e) {
+    console.error('Search error:', e);
+    setSearchResults([]);
+  } finally {
+    setIsSearching(false);
+  }
+}, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
