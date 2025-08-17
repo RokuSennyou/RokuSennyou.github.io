@@ -16,6 +16,7 @@ interface SearchResult {
 
 export default function SearchPopover() {
   const [open, setOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [value, setValue] = useState("");
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -27,6 +28,14 @@ export default function SearchPopover() {
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggle = () => setOpen((v) => !v);
+
+  const closePopover = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setOpen(false);
+      setIsClosing(false);
+    }, 300); 
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -105,8 +114,8 @@ export default function SearchPopover() {
       e.preventDefault();
       const selectedResult = searchResults[selectedIndex];
       if (selectedResult) {
-        setOpen(false);
-        router.push(selectedResult.url);
+        closePopover();
+        setTimeout(() => router.push(selectedResult.url), 300);
       }
     }
   };
@@ -124,7 +133,7 @@ export default function SearchPopover() {
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") closePopover();
       if (
         e.key === "/" &&
         !open &&
@@ -153,8 +162,8 @@ export default function SearchPopover() {
   }
 
   function onResultClick(result: SearchResult) {
-    setOpen(false);
-    router.push(result.url);
+    closePopover();
+    setTimeout(() => router.push(result.url), 300);
   }
 
   const highlightText = (text: string, query: string): React.ReactNode => {
@@ -193,24 +202,26 @@ export default function SearchPopover() {
         <div className="fixed inset-0 z-50 flex items-start justify-center">
           <div 
             className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-              open ? 'opacity-100' : 'opacity-0'
+              isClosing ? 'opacity-0' : 'opacity-100'
             }`}
-            onClick={() => setOpen(false)}
+            onClick={closePopover}
           />
           
-          <div className={`relative w-full max-w-4xl mx-4 mt-32 transform transition-all duration-500 ease-out ${
-            open 
-              ? 'translate-y-0 opacity-100 scale-100' 
-              : 'translate-y-8 opacity-0 scale-95'
+          <div className={`relative w-full max-w-4xl mx-4 mt-32 transform transition-all duration-300 ease-out ${
+            isClosing 
+              ? 'translate-y-8 opacity-0 scale-95' 
+              : 'translate-y-0 opacity-100 scale-100'
           }`}>
-            <div className="bg-[#1a1f2e]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-float-up">
+            <div className={`bg-[#1a1f2e]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden ${
+              isClosing ? 'animate-float-down' : 'animate-float-up'
+            }`}>
               <form onSubmit={onSubmit} className="p-8">
                 <div className="flex items-center gap-6 mb-6">
                   <svg 
                     viewBox="0 0 24 24" 
                     fill="none" 
-                    className={`h-8 w-8 text-white/70 flex-shrink-0 transform transition-all duration-300 delay-100 ${
-                      open ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+                    className={`h-8 w-8 text-white/70 flex-shrink-0 transform transition-all duration-300 ${
+                      isClosing ? 'scale-75 opacity-0 delay-0' : 'scale-100 opacity-100 delay-100'
                     }`}
                   >
                     <path
@@ -228,8 +239,8 @@ export default function SearchPopover() {
                     onKeyDown={handleKeyDown}
                     placeholder="搜尋文章、內容、標籤…"
                     className={`flex-1 bg-transparent outline-none text-white placeholder:text-white/50 text-2xl py-3 
-                              transform transition-all duration-300 delay-200 ${
-                                open ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                              transform transition-all duration-300 ${
+                                isClosing ? 'translate-x-4 opacity-0 delay-0' : 'translate-x-0 opacity-100 delay-200'
                               }`}
                   />
                   {isSearching && (
@@ -237,12 +248,11 @@ export default function SearchPopover() {
                   )}
                   <button
                     type="button"
-                    onClick={() => setOpen(false)}
+                    onClick={closePopover}
                     className={`p-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition-all duration-200 
                               hover:scale-105 transform ${
-                                open ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+                                isClosing ? 'scale-75 opacity-0 delay-0' : 'scale-100 opacity-100 delay-300'
                               }`}
-                    style={{ transitionDelay: '300ms' }}
                     aria-label="Close"
                   >
                     <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -254,8 +264,8 @@ export default function SearchPopover() {
 
                 {/* 搜尋結果 */}
                 {value.length >= 1 && (
-                  <div className={`mb-6 transform transition-all duration-400 delay-300 ${
-                    open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                  <div className={`mb-6 transform transition-all duration-300 ${
+                    isClosing ? 'translate-y-4 opacity-0 delay-0' : 'translate-y-0 opacity-100 delay-300'
                   }`}>
                     {searchResults.length > 0 ? (
                       <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide">
@@ -328,8 +338,8 @@ export default function SearchPopover() {
                   </div>
                 )}
 
-                <div className={`flex items-center justify-between transform transition-all duration-400 delay-400 ${
-                  open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                <div className={`flex items-center justify-between transform transition-all duration-300 ${
+                  isClosing ? 'translate-y-4 opacity-0 delay-0' : 'translate-y-0 opacity-100 delay-400'
                 }`}>
                   <div className="flex items-center gap-6 text-base text-white/60">
                     <div className="flex items-center gap-2">
@@ -368,8 +378,8 @@ export default function SearchPopover() {
                 <>
                   <div className="border-t border-white/10"></div>
                   <div className="p-8">
-                    <div className={`text-lg text-white/80 mb-6 font-medium transform transition-all duration-400 delay-300 ${
-                      open ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                    <div className={`text-lg text-white/80 mb-6 font-medium transform transition-all duration-300 ${
+                      isClosing ? 'translate-x-4 opacity-0 delay-0' : 'translate-x-0 opacity-100 delay-300'
                     }`}>
                       選擇標籤
                     </div>
@@ -379,8 +389,12 @@ export default function SearchPopover() {
                         <button
                           key={index}
                           onClick={() => onTagClick(tag)}
-                          className={`px-4 py-3 text-sm rounded-xl bg-white/10 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/50 text-white/80 hover:text-white transition-all duration-200 hover:scale-105 hover:shadow-lg transform ${open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
-                          style={{ transitionDelay: `${400 + index * 50}ms` }}
+                          className={`px-4 py-3 text-sm rounded-xl bg-white/10 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/50 text-white/80 hover:text-white transition-all duration-200 hover:scale-105 hover:shadow-lg transform ${
+                            isClosing ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'
+                          }`}
+                          style={{ 
+                            transitionDelay: isClosing ? '0ms' : `${400 + index * 50}ms`
+                          }}
                         >
                           <div className="flex items-center gap-2 justify-center">
                             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -417,9 +431,24 @@ export default function SearchPopover() {
             opacity: 1;
           }
         }
+
+        @keyframes float-down {
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+          }
+        }
         
         .animate-float-up {
-          animation: float-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          animation: float-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .animate-float-down {
+          animation: float-down 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         .scrollbar-hide {
