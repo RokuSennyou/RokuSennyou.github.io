@@ -49,6 +49,7 @@ export default function SearchPopover() {
             setAvailableTags(['日常']);
           }
         } catch (error) {
+          console.error('Failed to fetch tags:', error);
           setAvailableTags(['日常']);
         }
       };

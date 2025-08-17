@@ -59,13 +59,14 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
       { threshold: 0.1 }
     );
 
-    if (postsRef.current) {
-      observer.observe(postsRef.current);
+    const currentRef = postsRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (postsRef.current) {
-        observer.unobserve(postsRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);

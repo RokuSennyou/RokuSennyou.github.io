@@ -37,12 +37,12 @@ export default function Navbar() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href="/" className="font-bold text-white-200 tracking-wide mr-auto select-none">
+      <Link href="/" className="font-bold text-white-200 tracking-wide mr-auto select-none">
         🪐 Roku&apos;s Universe
-      </a>
+      </Link>
       <ul className="flex space-x-4 items-center font-medium">
         <li>
-          <a
+          <Link
             href="/"
             className={`flex items-center gap-2 rounded-xl transition-all duration-300 ${buttonClass}
               ${pathname === "/" 
@@ -50,10 +50,10 @@ export default function Navbar() {
                 : "text-gray-300 hover:text-white hover:bg-white/10"}`}
           >
             <span role="img" aria-label="Home">🌌</span> Home
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/about"
             className={`flex items-center gap-2 rounded-xl transition-all duration-300 ${buttonClass}
               ${pathname.startsWith("/about")
@@ -61,9 +61,9 @@ export default function Navbar() {
                 : "text-gray-300 hover:text-white hover:bg-white/10"}`}
           >
             <span role="img" aria-label="About">🌙</span> About
-          </a>
+          </Link>
         </li>
-          {/*<a
+          {/*<Link
             href="/blog"
             className={`flex items-center gap-2 rounded-xl transition-all duration-300 ${buttonClass}
               ${pathname.startsWith("/blog")
@@ -71,7 +71,7 @@ export default function Navbar() {
                 : "text-gray-300 hover:text-white hover:bg-white/10"}`}
           >
             <span role="img" aria-label="Blog">🌠</span> Blog
-          </a>*/}
+          </Link>*/}
         <li>
           <SearchPopover />
         </li>

@@ -28,7 +28,7 @@ export default function AboutPage() {
           }`}
         >
           {/* 標題 */}
-          <h1 className="text-3xl font-bold mb-2">Hi, I'm Roku!</h1>
+          <h1 className="text-3xl font-bold mb-2">Hi, I am Roku!</h1>
           <p className="text-gray-400 mb-6">
             一個甚麼都想摸一點的人，希望可以繼續進步 ((꜆꜄꜆ ˙꒳˙)꜆꜄꜆ｵﾗｵﾗｵﾗｵﾗ
           </p>

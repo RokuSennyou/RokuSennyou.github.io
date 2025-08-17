@@ -8,6 +8,7 @@ import remarkBreaks from "remark-breaks";
 import ShootingStar from "@/components/ShootingStar";
 import BackgroundStars from "@/components/BackgroundStars";
 import PostAnimationWrapper from "@/components/PostAnimationWrapper";
+export const dynamicParams = false; 
 
 type PostMeta = {
   title: string;
@@ -85,9 +86,9 @@ function getAdjacentPosts(currentId: string) {
 export default async function PostPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params; 
   const postData = await getPostData(id);
   const { prevPost, nextPost } = getAdjacentPosts(id);
 
