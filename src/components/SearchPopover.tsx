@@ -340,13 +340,13 @@ export default function SearchPopover() {
                         清除
                       </button>
                     )}
-                    <button
+                    {/*<button
                       type="submit"
                       className="px-6 py-2 text-base rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium transition-colors disabled:opacity-50"
                       disabled={!value.trim()}
                     >
                       搜尋
-                    </button>
+                    </button>*/}
                   </div>
                 </div>
               </form>
