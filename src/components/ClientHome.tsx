@@ -3,7 +3,6 @@ import { Typewriter } from "react-simple-typewriter";
 import ShootingStar from "./ShootingStar";
 import BackgroundStars from "./BackgroundStars";
 import { useMemo, useEffect, useState, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 
 interface Post {
   id: string;
@@ -12,6 +11,7 @@ interface Post {
   tags?: string[];
   summary?: string;
 }
+
 interface ClientHomeProps {
   allPostsData: Post[];
 }
@@ -19,9 +19,9 @@ interface ClientHomeProps {
 const PAGE_SIZE = 5;
 
 export default function ClientHome({ allPostsData }: ClientHomeProps) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const current = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
+  const [currentPage, setCurrentPage] = useState(1);
+  const [mounted, setMounted] = useState(false);
+  
   const totalPages = Math.max(1, Math.ceil(allPostsData.length / PAGE_SIZE));
 
   const [titleVisible, setTitleVisible] = useState(false);
@@ -32,12 +32,17 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
   const postsRef = useRef<HTMLElement>(null);
 
   const pagePosts = useMemo(() => {
-    const start = (current - 1) * PAGE_SIZE;
+    const start = (currentPage - 1) * PAGE_SIZE;
     return allPostsData.slice(start, start + PAGE_SIZE);
-  }, [allPostsData, current]);
+  }, [allPostsData, currentPage]);
 
-  // 封面
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    
     const timers = [
       setTimeout(() => setTitleVisible(true), 300),      
       setTimeout(() => setSubtitleVisible(true), 800),  
@@ -45,9 +50,11 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
     ];
 
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
+    if (!mounted || typeof window === 'undefined') return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -69,19 +76,32 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
-    if (searchParams.get("page")) {
+    if (!mounted || typeof window === 'undefined') return;
+    
+    if (currentPage > 1) {
       const el = document.getElementById("posts");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
-  }, [current, searchParams]);
+  }, [currentPage, mounted]);
 
   const goto = (p: number) => {
     const clamped = Math.min(totalPages, Math.max(1, p));
-    router.push(`/?page=${clamped}#posts`);
+    setCurrentPage(clamped);
   };
+
+  if (!mounted) {
+    return (
+      <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center text-center px-4">
+        <div className="cosmic-bg" />
+        <div className="p-8 text-white/70">Loading…</div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center text-center px-4 overflow-x-hidden">
@@ -147,7 +167,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
               }`}
               style={{ 
                 minHeight: "140px",
-                transitionDelay: postsVisible ? `${index * 150}ms` : '0ms' // 依序浮現
+                transitionDelay: postsVisible ? `${index * 150}ms` : '0ms'
               }}
             >
               <div className="flex items-center gap-3 mb-3">
@@ -181,7 +201,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
           style={{ transitionDelay: postsVisible ? `${pagePosts.length * 150 + 200}ms` : '0ms' }}
         >
           <Pagination
-            current={current}
+            current={currentPage}
             total={totalPages}
             onJump={goto}
           />

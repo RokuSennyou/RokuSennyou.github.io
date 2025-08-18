@@ -1,5 +1,3 @@
-// app/page.tsx（Server Component）
-import { Suspense } from "react";
 import ClientHome from "@/components/ClientHome";
 import fs from "fs";
 import path from "path";
@@ -24,11 +22,7 @@ function getAllPostsData() {
 }
 
 export default function Page() {
-  const allPostsData = getAllPostsData(); // 仍然可在伺服端抓檔案
+  const allPostsData = getAllPostsData();
 
-  return (
-    <Suspense fallback={<div className="p-8 text-white/70">Loading…</div>}>
-      <ClientHome allPostsData={allPostsData} />
-    </Suspense>
-  );
+  return <ClientHome allPostsData={allPostsData} />;
 }
