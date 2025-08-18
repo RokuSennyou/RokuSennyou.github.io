@@ -120,7 +120,7 @@ const performSearch = useCallback(async (query: string) => {
     }));
 
     setSearchResults(limited);
-  } catch (e) {
+  } catch {
     setSearchResults([]);
   } finally {
     setIsSearching(false);
