@@ -47,11 +47,11 @@ export default function SearchPopover() {
           const tags = await res.json();
           setAvailableTags(tags);
         } else {
-          //console.warn('Tags file not found, using fallback tags');
+          console.warn('Tags file not found, using fallback tags');
           setAvailableTags(['日常','開發']);
         }
       } catch (e) {
-        //console.error('Failed to fetch tags:', e);
+        console.error('Failed to fetch tags:', e);
         setAvailableTags(['日常','開發']);
       }
     };
