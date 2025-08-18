@@ -8,6 +8,7 @@ interface SearchResult {
   title: string;
   summary: string;
   snippet: string;
+  fullContent: string;
   date: string;
   tags: string[];
   url: string;
@@ -57,78 +58,74 @@ export default function SearchPopover() {
     fetchTags();
   }, []);
 
-  const performSearch = useCallback(async (query: string) => {
-    const q = query.trim();
-    if (!q) {
-      setSearchResults([]);
-      return;
+const performSearch = useCallback(async (query: string) => {
+  const q = query.trim();
+  if (!q) {
+    setSearchResults([]);
+    return;
+  }
+
+  setIsSearching(true);
+  try {
+    if (!datasetRef.current) {
+      const res = await fetch('/search.json', { cache: 'force-cache' }); 
+      if (!res.ok) throw new Error(`fetch /search.json failed: ${res.status} ${res.statusText}`);
+      const data = await res.json();
+      datasetRef.current = data as SearchResult[];
+      
     }
 
-    setIsSearching(true);
-    try {
-      if (!datasetRef.current) {
-        const res = await fetch('/search.json', { cache: 'force-cache' });
-        if (!res.ok) throw new Error(`fetch /search.json failed: ${res.status} ${res.statusText}`);
-        const data = await res.json();
-        datasetRef.current = data as SearchResult[];
+    const all = datasetRef.current || [];
+    const lower = q.toLowerCase();
+
+    const scoredTuples: Array<[number, SearchResult['matchType'], SearchResult]> = [];
+
+    for (const item of all) {
+      let matched = false;
+      
+      if (item.title && item.title.toLowerCase().includes(lower)) {
+        scoredTuples.push([3, 'title', item]);
+        matched = true;
+        continue;
       }
-
-      const all = datasetRef.current || [];
-      const lower = q.toLowerCase();
-
-      const scoredTuples: Array<[number, SearchResult['matchType'], SearchResult]> = [];
-
-      for (const item of all) {
-        let matched = false;
-        
-        if (item.title && item.title.toLowerCase().includes(lower)) {
-          scoredTuples.push([3, 'title', item]);
+      
+      if (item.tags && Array.isArray(item.tags)) {
+        const tagMatched = item.tags.some(tag => 
+          tag && String(tag).toLowerCase().includes(lower)
+        );
+        if (tagMatched) {
+          scoredTuples.push([2, 'tag', item]);
           matched = true;
           continue;
         }
+      }
+      
+      if (!matched) {
+        const fullContent = item.fullContent || item.snippet || '';
+        const summaryContent = item.summary || '';
         
-        if (item.tags && Array.isArray(item.tags)) {
-          const tagMatched = item.tags.some(tag => 
-            tag && String(tag).toLowerCase().includes(lower)
-          );
-          if (tagMatched) {
-            scoredTuples.push([2, 'tag', item]);
-            matched = true;
-            continue;
-          }
-        }
+        const fullContentMatch = fullContent.toLowerCase().includes(lower);
+        const summaryMatch = summaryContent.toLowerCase().includes(lower);
         
-        if (!matched) {
-          const summaryContent = item.summary || '';
-          const snippetContent = item.snippet || '';
-          const titleContent = item.title || '';
-          
-          const allContent = [
-            titleContent,
-            summaryContent,
-            snippetContent
-          ].join(' ').toLowerCase();
-          
-          if (allContent.includes(lower)) {
-            scoredTuples.push([1, 'content', item]);
-          }
+        if (fullContentMatch || summaryMatch) {
+          scoredTuples.push([1, 'content', item]);
         }
       }
-
-      scoredTuples.sort((a, b) => b[0] - a[0]);
-      const limited = scoredTuples.slice(0, 30).map(([, matchType, item]) => ({
-        ...item,
-        matchType,
-      }));
-
-      setSearchResults(limited);
-    } catch (e) {
-      console.error('Search error:', e);
-      setSearchResults([]);
-    } finally {
-      setIsSearching(false);
     }
-  }, []);
+
+    scoredTuples.sort((a, b) => b[0] - a[0]);
+    const limited = scoredTuples.slice(0, 30).map(([, matchType, item]) => ({
+      ...item,
+      matchType,
+    }));
+
+    setSearchResults(limited);
+  } catch (e) {
+    setSearchResults([]);
+  } finally {
+    setIsSearching(false);
+  }
+}, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
