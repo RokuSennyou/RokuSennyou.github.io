@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "node scripts/build-search-json.mjs",
     "dev": "next dev",
-    "build": "next build:search && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export",
