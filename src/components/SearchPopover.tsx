@@ -39,71 +39,96 @@ export default function SearchPopover() {
   };
 
   useEffect(() => {
-  const fetchTags = async () => {
-    try {
-      const res = await fetch('/tags.json', { cache: 'force-cache' });
-      if (res.ok) {
-        const tags = await res.json();
-        setAvailableTags(tags);
-      } else {
+    const fetchTags = async () => {
+      try {
+        const res = await fetch('/tags.json', { cache: 'force-cache' });
+        if (res.ok) {
+          const tags = await res.json();
+          setAvailableTags(tags);
+        } else {
+          console.warn('Tags file not found, using fallback tags');
+          setAvailableTags(['日常']);
+        }
+      } catch (e) {
+        console.error('Failed to fetch tags:', e);
         setAvailableTags(['日常']);
       }
-    } catch (e) {
-      console.error('Failed to fetch /tags.json', e);
-      setAvailableTags(['日常']);
-    }
-  };
-  fetchTags();
-}, []);
+    };
+    fetchTags();
+  }, []);
 
   const performSearch = useCallback(async (query: string) => {
-  const q = query.trim();
-  if (!q) {
-    setSearchResults([]);
-    return;
-  }
-
-  setIsSearching(true);
-  try {
-    // 第一次才抓靜態資料
-    if (!datasetRef.current) {
-      const res = await fetch('/search.json', { cache: 'force-cache' });
-      if (!res.ok) throw new Error('fetch /search.json failed');
-      datasetRef.current = (await res.json()) as SearchResult[];
+    const q = query.trim();
+    if (!q) {
+      setSearchResults([]);
+      return;
     }
 
-    const all = datasetRef.current || [];
-    const lower = q.toLowerCase();
+    setIsSearching(true);
+    try {
+      if (!datasetRef.current) {
+        const res = await fetch('/search.json', { cache: 'force-cache' });
+        if (!res.ok) throw new Error(`fetch /search.json failed: ${res.status} ${res.statusText}`);
+        const data = await res.json();
+        datasetRef.current = data as SearchResult[];
+      }
 
-    // 比對：標題 / 標籤 / 內容，回傳 [score, matchType, item]
-    const scoredTuples: Array<[number, SearchResult['matchType'], SearchResult]> = [];
+      const all = datasetRef.current || [];
+      const lower = q.toLowerCase();
 
-    for (const item of all) {
-      const inTitle = item.title?.toLowerCase().includes(lower);
-      const inTags = (item.tags || []).some(t => String(t).toLowerCase().includes(lower));
-      const content = (item.summary || item.snippet || '').toLowerCase();
-      const inContent = content.includes(lower);
+      const scoredTuples: Array<[number, SearchResult['matchType'], SearchResult]> = [];
 
-      if (inTitle) scoredTuples.push([3, 'title', item]);
-      else if (inTags) scoredTuples.push([2, 'tag', item]);
-      else if (inContent) scoredTuples.push([1, 'content', item]);
+      for (const item of all) {
+        let matched = false;
+        
+        if (item.title && item.title.toLowerCase().includes(lower)) {
+          scoredTuples.push([3, 'title', item]);
+          matched = true;
+          continue;
+        }
+        
+        if (item.tags && Array.isArray(item.tags)) {
+          const tagMatched = item.tags.some(tag => 
+            tag && String(tag).toLowerCase().includes(lower)
+          );
+          if (tagMatched) {
+            scoredTuples.push([2, 'tag', item]);
+            matched = true;
+            continue;
+          }
+        }
+        
+        if (!matched) {
+          const summaryContent = item.summary || '';
+          const snippetContent = item.snippet || '';
+          const titleContent = item.title || '';
+          
+          const allContent = [
+            titleContent,
+            summaryContent,
+            snippetContent
+          ].join(' ').toLowerCase();
+          
+          if (allContent.includes(lower)) {
+            scoredTuples.push([1, 'content', item]);
+          }
+        }
+      }
+
+      scoredTuples.sort((a, b) => b[0] - a[0]);
+      const limited = scoredTuples.slice(0, 30).map(([, matchType, item]) => ({
+        ...item,
+        matchType,
+      }));
+
+      setSearchResults(limited);
+    } catch (e) {
+      console.error('Search error:', e);
+      setSearchResults([]);
+    } finally {
+      setIsSearching(false);
     }
-
-    // 依 score 排序、最多取 30 筆，最後再把 matchType 塞回去
-    scoredTuples.sort((a, b) => b[0] - a[0]);
-    const limited = scoredTuples.slice(0, 30).map(([, matchType, item]) => ({
-      ...item,
-      matchType,
-    }));
-
-    setSearchResults(limited);
-  } catch (e) {
-    console.error('Search error:', e);
-    setSearchResults([]);
-  } finally {
-    setIsSearching(false);
-  }
-}, []);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -332,24 +357,29 @@ export default function SearchPopover() {
                             )}
                             
                             {result.snippet && (
-                              <p className="text-white/60 text-sm mb-3">
+                              <p className="text-white/60 text-sm mb-3 line-clamp-2">
                                 {highlightText(result.snippet, value)}
                               </p>
                             )}
                             
                             <div className="flex items-center justify-between">
-                              {result.tags.length > 0 && (
-                                <div className="flex gap-2">
+                              {result.tags && result.tags.length > 0 && (
+                                <div className="flex gap-2 flex-wrap">
                                   {result.tags.slice(0, 3).map((tag, idx) => (
                                     <span key={idx} className="px-2 py-1 bg-white/10 text-white/70 rounded text-xs">
                                       {tag}
                                     </span>
                                   ))}
+                                  {result.tags.length > 3 && (
+                                    <span className="px-2 py-1 bg-white/5 text-white/50 rounded text-xs">
+                                      +{result.tags.length - 3} 個標籤
+                                    </span>
+                                  )}
                                 </div>
                               )}
                               {result.date && (
                                 <span className="text-white/50 text-xs">
-                                  {new Date(result.date).toLocaleDateString()}
+                                  {new Date(result.date).toLocaleDateString('zh-TW')}
                                 </span>
                               )}
                             </div>
@@ -399,8 +429,8 @@ export default function SearchPopover() {
                 </div>
               </form>
 
-              {/* Tag OUO */}
-              {value.length < 1 && (
+              {/* Tag */}
+              {value.length < 1 && availableTags.length > 0 && (
                 <>
                   <div className="border-t border-white/10"></div>
                   <div className="p-8">
@@ -432,12 +462,17 @@ export default function SearchPopover() {
                         </button>
                       ))}
                     </div>
+                  </div>
+                </>
+              )}
 
-                    {availableTags.length === 0 && (
-                      <div className="text-center py-8 text-white/50">
-                        載入標籤中...
-                      </div>
-                    )}
+              {value.length < 1 && availableTags.length === 0 && (
+                <>
+                  <div className="border-t border-white/10"></div>
+                  <div className="p-8">
+                    <div className="text-center py-8 text-white/50">
+                      載入標籤中...
+                    </div>
                   </div>
                 </>
               )}
@@ -484,6 +519,13 @@ export default function SearchPopover() {
         
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
+        }
+
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </>
