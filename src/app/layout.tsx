@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Roku's Universe",
   description: "A place to explore Roku's creative universe!",
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 export default function RootLayout({
