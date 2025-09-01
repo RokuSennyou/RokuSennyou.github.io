@@ -48,11 +48,11 @@ export default function SearchPopover() {
           setAvailableTags(tags);
         } else {
           console.warn('Tags file not found, using fallback tags');
-          setAvailableTags(['日常','開發']);
+          setAvailableTags(['日常','開發','遊戲']);
         }
       } catch (e) {
         console.error('Failed to fetch tags:', e);
-        setAvailableTags(['日常','開發']);
+        setAvailableTags(['日常','開發','遊戲']);
       }
     };
     fetchTags();
