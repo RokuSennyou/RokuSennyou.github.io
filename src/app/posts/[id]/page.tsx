@@ -44,18 +44,15 @@ async function getPostData(
     .use(remarkGfm)
     .use(remarkBreaks)
     .use(html, {
-      // 允許危險的 HTML，這樣圖片標籤才能正常渲染
       allowDangerousHtml: true
     })
     .process(matterResult.content);
 
-  // 處理圖片路徑：將相對路徑轉換為絕對路徑
   let htmlContent = processedContent.toString();
   
-  // 替換 markdown 圖片語法中的相對路徑
   htmlContent = htmlContent.replace(
     /<img src="(?!http|\/|data:)([^"]+)"/g,
-    `<img src="/images/posts/${id}/$1"`
+    '<img src="/$1"'
   );
 
   return {
@@ -69,7 +66,12 @@ function getAllPosts(): Post[] {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filenames = fs.readdirSync(postsDirectory);
   
-  const posts = filenames.map((filename) => {
+  const markdownFiles = filenames.filter((filename) => {
+    const fullPath = path.join(postsDirectory, filename);
+    return fs.statSync(fullPath).isFile() && filename.endsWith('.md');
+  });
+  
+  const posts = markdownFiles.map((filename) => {
     const id = filename.replace(/\.md$/, "");
     const fullPath = path.join(postsDirectory, filename);
     const fileContents = fs.readFileSync(fullPath, "utf8");
