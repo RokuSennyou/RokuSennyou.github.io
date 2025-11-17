@@ -108,10 +108,10 @@ export default function AboutPage() {
             </div>
 
             <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-2 text-white-300">活動</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white-300">活動與組織</h3>
               <ul className="list-disc ml-6 text-gray-300 space-y-1">
-                <li>2025.07 - 2025.09 高中海狸一日營 助教</li>
-                <li>2024.10 - 2025.01 啟夢教育科系探索營隊 隊輔</li>
+                <li>2025.09 - 2025.12 台師大軟體工程 後端組組長</li>
+                <li>2025.07 - 2026.06 師大資工41屆系學會 副活動股長兼資訊股股員</li>
                 <li>2024.09 臺師大東亞資工幼家科學三系聯合宿營 總籌</li>
                 <li>2024.09 - 2025.07 2025 臺師大資工營 總籌</li>
                 <li>2024.07 - 2025.06 師大資工40屆系學會 活動股長</li>
@@ -119,6 +119,19 @@ export default function AboutPage() {
                 <li>2023.12 - 2024.07 2024 臺師大資工營 活動股股員兼美輔股股員</li>
                 <li>2024.01 臺師大中友會返鄉服務隊 活動組組員</li>
                 <li>2023.08 築夢教育志工團 活動組組員</li>
+              </ul>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2 text-white-300">一些工作經驗</h3>
+              <ul className="list-disc ml-6 text-gray-300 space-y-1">
+                <li>2026.01 啟夢教育科系探索營隊 資訊體驗課程講師</li>
+                <li>2026.11 臺北資訊展參展人員</li>
+                <li>2025.11 新竹資訊學科能力競賽 評審委員</li>
+                <li>2025.09 - 2025.12 台師大資料結構 課程助教</li>
+                <li>2025.09 - 2025.12 台師大運動數據分析與程式設計 課程助教</li>
+                <li>2025.07 - 2025.09 高中海狸一日營 助教</li>
+                <li>2024.10 - 2025.01 啟夢教育科系探索營隊 隊輔</li>
               </ul>
             </div>
             
