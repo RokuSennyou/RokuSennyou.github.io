@@ -110,8 +110,12 @@ export default function AboutPage() {
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2 text-white-300">活動與組織</h3>
               <ul className="list-disc ml-6 text-gray-300 space-y-1">
+                <li>2026.03 SITCON2026 場務組組員</li>
+                <li>2026.03 臺師大資工實習分享會 講者</li>
+                <li>2026.03 2026 臺師大資工營 戲劇培訓講師</li>
                 <li>2025.09 - 2025.12 台師大軟體工程 後端組組長</li>
                 <li>2025.07 - 2026.06 師大資工41屆系學會 副活動股長兼資訊股股員</li>
+                <li>2025.03 2025 臺師大資工營 劇本培訓講師</li>
                 <li>2024.09 臺師大東亞資工幼家科學三系聯合宿營 總籌</li>
                 <li>2024.09 - 2025.07 2025 臺師大資工營 總籌</li>
                 <li>2024.07 - 2025.06 師大資工40屆系學會 活動股長</li>
@@ -125,6 +129,9 @@ export default function AboutPage() {
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2 text-white-300">一些工作經驗</h3>
               <ul className="list-disc ml-6 text-gray-300 space-y-1">
+                <li>2026.02 - 2026.06 台師大程式設計（二） 課程助教</li>
+                <li>2026.02 - 2026.06 台師大運動數據分析與程式設計 課程助教</li>
+                <li>2026.01 - 2026.06 叡揚資訊 助理程式設計師</li>
                 <li>2026.01 啟夢教育科系探索營隊 資訊體驗課程講師</li>
                 <li>2026.11 臺北資訊展參展人員</li>
                 <li>2025.11 新竹資訊學科能力競賽 評審委員</li>
@@ -138,6 +145,8 @@ export default function AboutPage() {
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2 text-white-300">競賽與獎項</h3>
               <ul className="list-disc ml-6 text-gray-300 space-y-1">
+                <li>2025.04 臺師大 114 學年度 Star 星辰獎</li>
+                <li>2025.09 梅竹黑客松</li>
                 <li>2025.06 臺師大資料庫理論 最佳創新專題</li>
                 <li>2025.04 臺師大 113 學年度 Star 星辰獎</li>
                 <li>2024.09 臺師大第十二屆程式設計通識課程 專題特優</li>
