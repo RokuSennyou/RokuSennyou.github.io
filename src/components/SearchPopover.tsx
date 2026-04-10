@@ -255,7 +255,7 @@ const performSearch = useCallback(async (query: string) => {
             onClick={closePopover}
           />
           
-          <div className={`relative w-full max-w-4xl mx-4 mt-32 transform transition-all duration-300 ease-out ${
+          <div className={`relative w-full max-w-4xl mx-3 sm:mx-4 mt-20 sm:mt-32 transform transition-all duration-300 ease-out ${
             isClosing 
               ? 'translate-y-8 opacity-0 scale-95' 
               : 'translate-y-0 opacity-100 scale-100'
@@ -263,12 +263,12 @@ const performSearch = useCallback(async (query: string) => {
             <div className={`bg-[#1a1f2e]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden ${
               isClosing ? 'animate-float-down' : 'animate-float-up'
             }`}>
-              <form onSubmit={onSubmit} className="p-8">
-                <div className="flex items-center gap-6 mb-6">
+              <form onSubmit={onSubmit} className="p-4 sm:p-8">
+                <div className="flex items-center gap-3 sm:gap-6 mb-4 sm:mb-6">
                   <svg 
                     viewBox="0 0 24 24" 
                     fill="none" 
-                    className={`h-8 w-8 text-white/70 flex-shrink-0 transform transition-all duration-300 ${
+                    className={`h-6 w-6 sm:h-8 sm:w-8 text-white/70 flex-shrink-0 transform transition-all duration-300 ${
                       isClosing ? 'scale-75 opacity-0 delay-0' : 'scale-100 opacity-100 delay-100'
                     }`}
                   >
@@ -286,7 +286,7 @@ const performSearch = useCallback(async (query: string) => {
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     placeholder="搜尋文章、內容、標籤…"
-                    className={`flex-1 bg-transparent outline-none text-white placeholder:text-white/50 text-2xl py-3 
+                    className={`flex-1 bg-transparent outline-none text-white placeholder:text-white/50 text-lg sm:text-2xl py-2 sm:py-3 
                               transform transition-all duration-300 ${
                                 isClosing ? 'translate-x-4 opacity-0 delay-0' : 'translate-x-0 opacity-100 delay-200'
                               }`}
@@ -297,7 +297,7 @@ const performSearch = useCallback(async (query: string) => {
                   <button
                     type="button"
                     onClick={closePopover}
-                    className={`p-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition-all duration-200 
+                    className={`p-2 sm:p-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition-all duration-200 
                               hover:scale-105 transform ${
                                 isClosing ? 'scale-75 opacity-0 delay-0' : 'scale-100 opacity-100 delay-300'
                               }`}
@@ -316,7 +316,7 @@ const performSearch = useCallback(async (query: string) => {
                     isClosing ? 'translate-y-4 opacity-0 delay-0' : 'translate-y-0 opacity-100 delay-300'
                   }`}>
                     {searchResults.length > 0 ? (
-                      <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide p-2 -m-2">
+                      <div className="space-y-3 max-h-[50vh] sm:max-h-96 overflow-y-auto scrollbar-hide p-2 -m-2">
                         <div className="text-sm text-white/60 mb-3">
                           找到 {searchResults.length} 個結果
                         </div>
@@ -334,7 +334,7 @@ const performSearch = useCallback(async (query: string) => {
                               <h3 className="text-white font-medium text-lg">
                                 {highlightText(result.title, value)}
                               </h3>
-                              <div className="flex items-center gap-2 text-sm text-white/50">
+                              <div className="hidden sm:flex items-center gap-2 text-sm text-white/50">
                                 {result.matchType === 'title' && (
                                   <span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded text-xs">標題</span>
                                 )}
@@ -394,7 +394,7 @@ const performSearch = useCallback(async (query: string) => {
                 <div className={`flex items-center justify-between transform transition-all duration-300 ${
                   isClosing ? 'translate-y-4 opacity-0 delay-0' : 'translate-y-0 opacity-100 delay-400'
                 }`}>
-                  <div className="flex items-center gap-6 text-base text-white/60">
+                  <div className="hidden md:flex items-center gap-6 text-base text-white/60">
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-2 rounded bg-white/10 text-sm font-mono">/</span>
                       <span>開啟搜尋</span>
@@ -408,6 +408,8 @@ const performSearch = useCallback(async (query: string) => {
                       <span>選擇結果</span>
                     </div>
                   </div>
+
+                  <div className="md:hidden text-xs text-white/60">Esc 關閉</div>
                   
                   <div className="flex items-center gap-4">
                     {value && (
@@ -430,19 +432,19 @@ const performSearch = useCallback(async (query: string) => {
               {value.length < 1 && availableTags.length > 0 && (
                 <>
                   <div className="border-t border-white/10"></div>
-                  <div className="p-8">
-                    <div className={`text-lg text-white/80 mb-6 font-medium transform transition-all duration-300 ${
+                  <div className="p-4 sm:p-8">
+                    <div className={`text-base sm:text-lg text-white/80 mb-4 sm:mb-6 font-medium transform transition-all duration-300 ${
                       isClosing ? 'translate-x-4 opacity-0 delay-0' : 'translate-x-0 opacity-100 delay-300'
                     }`}>
                       選擇標籤
                     </div>
                     
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
                       {availableTags.map((tag, index) => (
                         <button
                           key={index}
                           onClick={() => onTagClick(tag)}
-                          className={`px-4 py-3 text-sm rounded-xl bg-white/10 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/50 text-white/80 hover:text-white transition-all duration-200 hover:scale-105 hover:shadow-lg transform ${
+                          className={`px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm rounded-xl bg-white/10 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/50 text-white/80 hover:text-white transition-all duration-200 hover:scale-105 hover:shadow-lg transform ${
                             isClosing ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'
                           }`}
                           style={{ 
@@ -466,7 +468,7 @@ const performSearch = useCallback(async (query: string) => {
               {value.length < 1 && availableTags.length === 0 && (
                 <>
                   <div className="border-t border-white/10"></div>
-                  <div className="p-8">
+                  <div className="p-4 sm:p-8">
                     <div className="text-center py-8 text-white/50">
                       載入標籤中...
                     </div>

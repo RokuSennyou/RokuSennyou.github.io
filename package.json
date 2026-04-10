@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prebuild": "node scripts/build-search-json.mjs",
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--localstorage-file=.next/node-localstorage' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

@@ -17,6 +17,15 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Troubleshooting
+
+If you see `TypeError: localStorage.getItem is not a function` in `next dev`:
+
+- This can happen on Node 25 with Next.js dev overlay.
+- The project `dev` script already applies a workaround by setting a valid `--localstorage-file` path.
+- If the issue still appears, make sure you start with `npm run dev` (not `next dev` directly).
+- Recommended runtime is Node LTS (20 or 22).
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

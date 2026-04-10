@@ -19,16 +19,16 @@ export default function AboutPage() {
     <div className="min-h-screen w-full bg-gradient-to-br from-[#181e33] via-[#232952] to-[#3d1f56] relative overflow-hidden">
       <BackgroundStars/>
       <ShootingStar />
-      <div className="flex justify-center items-start py-16 min-h-screen relative z-10">
+      <div className="flex justify-center items-start px-3 sm:px-4 py-8 sm:py-16 min-h-screen relative z-10">
         <div 
-          className={`w-full max-w-4xl bg-[#1a1f2e]/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 p-12 min-h-[700px] transition-all duration-1000 ease-out transform ${
+          className={`w-full max-w-4xl bg-[#1a1f2e]/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 p-5 sm:p-8 md:p-12 sm:min-h-[700px] transition-all duration-1000 ease-out transform ${
             isVisible 
               ? 'translate-y-0 opacity-100' 
               : 'translate-y-20 opacity-0'
           }`}
         >
           {/* 標題 */}
-          <h1 className="text-3xl font-bold mb-2">Hi, I am Roku!</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Hi, I am Roku!</h1>
           <p className="text-gray-400 mb-6">
             一個甚麼都想摸一點的人，希望可以繼續進步 ((꜆꜄꜆ ˙꒳˙)꜆꜄꜆ｵﾗｵﾗｵﾗｵﾗ
           </p>
@@ -50,7 +50,7 @@ export default function AboutPage() {
           
           {/* 技能 */}
           <div className="mb-8">
-            <h3 className="text-lg font-bold mb-2">CS Skills</h3>
+            <h3 className="text-lg sm:text-xl font-bold mb-2">CS Skills</h3>
 
             {/* Programming */}
             <div className="mt-4">

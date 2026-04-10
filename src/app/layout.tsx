@@ -37,12 +37,12 @@ export default function RootLayout({
         <ScrollProgress height={3} color="#0ea5e9" zIndex={60} />
         <MouseTrail />
         <Navbar />
-        <main className="pt-16">{children}</main>
-        <footer className="relative bg-[#181e33] text-gray-400 p-6">
-          <div className="text-center text-sm">
-            © 2025 RokuSennyou. All rights reserved.
+        <main className="pt-14 sm:pt-16">{children}</main>
+        <footer className="relative bg-[#181e33] text-gray-400 p-4 sm:p-6">
+          <div className="text-center text-xs sm:text-sm">
+            © 2026 RokuSennyou. All rights reserved.
           </div>
-          <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          <div className="mt-3 md:mt-0 flex justify-center md:block md:absolute md:right-4 md:top-1/2 md:-translate-y-1/2">
             <SocialBar />
           </div>
         </footer>

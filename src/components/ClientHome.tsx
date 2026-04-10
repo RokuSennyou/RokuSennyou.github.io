@@ -1,8 +1,13 @@
 "use client";
-import { Typewriter } from "react-simple-typewriter";
 import ShootingStar from "./ShootingStar";
 import BackgroundStars from "./BackgroundStars";
 import { useMemo, useEffect, useState, useRef } from "react";
+import dynamic from "next/dynamic";
+
+const Typewriter = dynamic(
+  () => import("react-simple-typewriter").then((mod) => mod.Typewriter),
+  { ssr: false }
+);
 
 interface Post {
   id: string;
@@ -110,10 +115,10 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
       <ShootingStar />
 
       {/* 封面 */}
-      <section className="h-screen flex flex-col items-center justify-center relative z-10 w-full">
+      <section className="h-screen flex flex-col items-center justify-center relative z-10 w-full px-3">
         {/* 標題 */}
         <h1 
-          className={`text-5xl sm:text-6xl font-bold mb-4 transition-all duration-1000 ease-out transform ${
+          className={`text-3xl sm:text-5xl md:text-6xl font-bold mb-4 transition-all duration-1000 ease-out transform ${
             titleVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
@@ -130,7 +135,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
         
         {/* 副標題 */}
         <p 
-          className={`text-lg text-gray-300 mb-8 transition-all duration-1000 ease-out transform ${
+          className={`text-base sm:text-lg text-gray-300 mb-8 transition-all duration-1000 ease-out transform ${
             subtitleVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
@@ -140,7 +145,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
         {/* 箭頭 */}
         <a
           href="#posts"
-          className={`absolute bottom-20 left-1/2 -translate-x-1/2 animate-bounce text-white text-3xl opacity-70 select-none transition-all duration-1000 ease-out transform ${
+          className={`absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 animate-bounce text-white text-2xl sm:text-3xl opacity-70 select-none transition-all duration-1000 ease-out transform ${
             arrowVisible ? 'translate-y-0 opacity-70' : 'translate-y-10 opacity-0'
           }`}
         >
@@ -152,7 +157,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
       <section 
         id="posts" 
         ref={postsRef}
-        className={`w-full px-4 pb-20 pt-20 transition-all duration-1200 ease-out transform ${
+        className={`w-full px-2 sm:px-4 pb-16 sm:pb-20 pt-12 sm:pt-20 transition-all duration-1200 ease-out transform ${
           postsVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
         }`}
       >
@@ -160,7 +165,7 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
           {pagePosts.map(({ id, date, title, tags, summary }, index) => (
             <li
               key={id}
-              className={`w-full max-w-[900px] mx-auto bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg px-16 py-8 transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-2xl ${
+              className={`w-full max-w-[900px] mx-auto bg-[#22253a]/80 border border-white/10 rounded-2xl shadow-lg px-4 sm:px-8 lg:px-16 py-5 sm:py-8 transition-all duration-700 ease-out transform md:hover:scale-[1.02] hover:shadow-2xl ${
                 postsVisible 
                   ? 'translate-y-0 opacity-100' 
                   : 'translate-y-12 opacity-0'
@@ -170,12 +175,12 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
                 transitionDelay: postsVisible ? `${index * 150}ms` : '0ms'
               }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-base text-gray-400">{date}</span>
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+                <span className="text-sm sm:text-base text-gray-400">{date}</span>
                 {tags?.map((tag) => (
                   <span
                     key={tag}
-                    className="bg-[#373e5b] text-sm text-blue-300 rounded px-3 py-1 ml-1"
+                    className="bg-[#373e5b] text-xs sm:text-sm text-blue-300 rounded px-2 sm:px-3 py-1"
                   >
                     #{tag}
                   </span>
@@ -183,12 +188,12 @@ export default function ClientHome({ allPostsData }: ClientHomeProps) {
               </div>
               <a
                 href={`/posts/${id}`}
-                className="block text-2xl font-bold text-white hover:underline mb-2 text-left"
+                className="block text-xl sm:text-2xl font-bold text-white hover:underline mb-2 text-left break-words"
               >
                 {title}
               </a>
               {summary && (
-                <p className="text-lg text-gray-300 text-left">{summary}</p>
+                <p className="text-base sm:text-lg text-gray-300 text-left">{summary}</p>
               )}
             </li>
           ))}
@@ -223,11 +228,11 @@ function Pagination({
   const pages = Array.from({ length: total }, (_, i) => i + 1);
 
   return (
-    <nav className="mt-10 flex items-center justify-center gap-2">
+    <nav className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
       <button
         onClick={() => onJump(current - 1)}
         disabled={current === 1}
-        className={`px-3 py-2 rounded-xl border border-white/10 text-sm ${
+        className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-white/10 text-xs sm:text-sm ${
           current === 1 ? "opacity-40 cursor-not-allowed" : "hover:bg-white/5"
         }`}
       >
@@ -241,7 +246,7 @@ function Pagination({
             key={p}
             onClick={() => onJump(p)}
             aria-current={active ? "page" : undefined}
-            className={`w-9 h-9 rounded-xl grid place-items-center text-sm transition border border-white/10
+            className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl grid place-items-center text-xs sm:text-sm transition border border-white/10
               ${
                 active
                   ? "bg-sky-500/30 text-sky-200 ring-2 ring-sky-400/40"
@@ -256,7 +261,7 @@ function Pagination({
       <button
         onClick={() => onJump(current + 1)}
         disabled={current === total}
-        className={`px-3 py-2 rounded-xl border border-white/10 text-sm ${
+        className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-white/10 text-xs sm:text-sm ${
           current === total
             ? "opacity-40 cursor-not-allowed"
             : "hover:bg-white/5"

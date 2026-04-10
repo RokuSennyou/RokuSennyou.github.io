@@ -20,12 +20,20 @@ function randomAround(x: number, y: number, radius = 14) {
 
 export default function MouseTrail() {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const [mouse, setMouse] = useState<{ x: number; y: number } | null>(null);
   const particleId = useRef(0);
+  const mouseRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     function handleMove(e: MouseEvent) {
-      setMouse({ x: e.clientX, y: e.clientY });
+      mouseRef.current = { x: e.clientX, y: e.clientY };
       const offset = randomAround(e.clientX, e.clientY, 14);
       setParticles((prev) => [
         ...prev,
@@ -41,8 +49,8 @@ export default function MouseTrail() {
     window.addEventListener("mousemove", handleMove);
 
     const staticStarInterval = setInterval(() => {
-      if (mouse) {
-        const offset = randomAround(mouse.x, mouse.y, 14);
+      if (mouseRef.current) {
+        const offset = randomAround(mouseRef.current.x, mouseRef.current.y, 14);
         setParticles((prev) => [
           ...prev,
           {
@@ -69,7 +77,7 @@ export default function MouseTrail() {
       clearInterval(staticStarInterval);
       clearInterval(decay);
     };
-  }, [mouse]);
+  }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50">

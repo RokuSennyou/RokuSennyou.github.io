@@ -111,12 +111,12 @@ export default async function PostPage({
     <div className="min-h-screen w-full bg-gradient-to-br from-[#181e33] via-[#232952] to-[#3d1f56] relative overflow-hidden">
       <BackgroundStars />
       <ShootingStar />
-      <div className="py-16 px-4">
+      <div className="py-8 sm:py-12 md:py-16 px-3 sm:px-4">
         <PostAnimationWrapper>
           {/* 文章 */}
-          <div className="w-full max-w-4xl mx-auto bg-[#1a1f2e]/90 rounded-2xl border border-white/10 p-12 shadow-2xl">
+          <div className="w-full max-w-4xl mx-auto bg-[#1a1f2e]/90 rounded-2xl border border-white/10 p-5 sm:p-8 md:p-12 shadow-2xl">
             {/* 標題 / 標籤 / 內文 */}
-            <h1 className="text-4xl font-bold mb-2">{postData.title}</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 break-words">{postData.title}</h1>
             <div className="mb-4 text-gray-400 text-sm">{postData.date}</div>
             {postData.tags?.length ? (
               <div className="mb-6 flex flex-wrap gap-2">
@@ -132,7 +132,7 @@ export default async function PostPage({
             ) : null}
 
             <article
-              className="max-w-none text-gray-100 leading-relaxed 
+              className="max-w-none text-sm sm:text-base text-gray-100 leading-relaxed 
                 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mb-4 [&_h1]:mt-6 
                 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mb-3 [&_h2]:mt-5 
                 [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-white [&_h3]:mb-2 [&_h3]:mt-4 
@@ -162,7 +162,7 @@ export default async function PostPage({
               {prevPost ? (
                 <a
                   href={`/posts/${prevPost.id}`}
-                  className="group flex items-center gap-3 px-6 py-4
+                  className="group flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4
                             bg-[#2a2f3e]/80 hover:bg-[#2a2f3e]
                             rounded-lg border border-white/10 hover:border-white/20
                             transition-all duration-300"
@@ -186,7 +186,7 @@ export default async function PostPage({
               {nextPost ? (
                 <a
                   href={`/posts/${nextPost.id}`}
-                  className="group flex items-center justify-end gap-3 px-6 py-4
+                  className="group flex items-center justify-end gap-3 px-4 sm:px-6 py-3 sm:py-4
                             bg-[#2a2f3e]/80 hover:bg-[#2a2f3e]
                             rounded-lg border border-white/10 hover:border-white/20
                             transition-all duration-300 text-right"
